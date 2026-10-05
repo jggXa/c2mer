@@ -1,0 +1,280 @@
+{
+  "mappings": {
+    "com/ishland/c2me/base/mixin/access/IRegionFile": {
+      "write": "m_63654_(Lnet/minecraft/world/level/ChunkPos;Ljava/nio/ByteBuffer;)V"
+    },
+    "com/ishland/c2me/base/mixin/access/IChunkTicket": {
+      "timedOut": "m_9434_(J)Z"
+    },
+    "com/ishland/c2me/base/mixin/util/log4j2shutdownhookisnomore/MixinMinecraftDedicatedServer": {
+      "onServerExit": "Lnet/minecraft/server/dedicated/DedicatedServer;m_6988_()V"
+    },
+    "com/ishland/c2me/base/mixin/access/IChunkHolder": {
+      "updateFutures": "m_143003_(Lnet/minecraft/server/level/ChunkMap;Ljava/util/concurrent/Executor;)V"
+    },
+    "com/ishland/c2me/base/mixin/access/IThreadedAnvilChunkStorage": {
+      "releaseLightTicket": "m_140375_(Lnet/minecraft/world/level/ChunkPos;)V",
+      "saveChunkIfNeeded": "m_198874_(Lnet/minecraft/server/level/ChunkHolder;)Z",
+      "level": "f_140133_:Lnet/minecraft/server/level/ServerLevel;",
+      "updatingChunkMap": "f_140129_:Lit/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap;",
+      "visibleChunkMap": "f_140130_:Lit/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap;",
+      "mainThreadExecutor": "f_140135_:Lnet/minecraft/util/thread/BlockableEventLoop;",
+      "promoteChunkMap": "m_140324_()Z"
+    },
+    "com/ishland/c2me/base/mixin/priority/MixinServerChunkManager": {
+      "Lnet/minecraft/server/level/ServerChunkCache$MainThreadExecutor;managedBlock(Ljava/util/function/BooleanSupplier;)V": "Lnet/minecraft/server/level/ServerChunkCache$MainThreadExecutor;m_18701_(Ljava/util/function/BooleanSupplier;)V",
+      "getChunk(IILnet/minecraft/world/level/chunk/ChunkStatus;Z)Lnet/minecraft/world/level/chunk/ChunkAccess;": "Lnet/minecraft/server/level/ServerChunkCache;m_7587_(IILnet/minecraft/world/level/chunk/ChunkStatus;Z)Lnet/minecraft/world/level/chunk/ChunkAccess;"
+    },
+    "com/ishland/c2me/base/mixin/access/INbtCompound": {
+      "entries": "m_128450_()Ljava/util/Map;"
+    },
+    "com/ishland/c2me/base/mixin/access/IBlockEntity": {
+      "saveAdditional": "m_183515_(Lnet/minecraft/nbt/CompoundTag;)V"
+    },
+    "com/ishland/c2me/base/mixin/profiling/MixinChunkHolder": {
+      "getOrScheduleFuture": "Lnet/minecraft/server/level/ChunkHolder;m_140049_(Lnet/minecraft/world/level/chunk/ChunkStatus;Lnet/minecraft/server/level/ChunkMap;)Ljava/util/concurrent/CompletableFuture;"
+    },
+    "com/ishland/c2me/base/mixin/access/IChunkTickScheduler": {
+      "pendingTicks": "f_193164_:Ljava/util/List;",
+      "tickQueue": "f_193163_:Ljava/util/Queue;"
+    },
+    "com/ishland/c2me/base/mixin/access/ISimpleTickScheduler": {
+      "ticks": "f_193291_:Ljava/util/List;"
+    },
+    "com/ishland/c2me/base/mixin/access/IWeightedList": {
+      "entries": "f_147917_:Ljava/util/List;"
+    },
+    "com/ishland/c2me/base/mixin/access/ISerializingRegionBasedStorage": {
+      "worker": "f_63773_:Lnet/minecraft/world/level/chunk/storage/IOWorker;"
+    },
+    "com/ishland/c2me/base/mixin/access/IPendingStore": {
+      "result": "f_63566_:Ljava/util/concurrent/CompletableFuture;"
+    },
+    "com/ishland/c2me/base/mixin/access/ISimpleRandom": {
+      "seed": "f_189350_:J",
+      "setSeed": "m_188584_(J)V"
+    },
+    "com/ishland/c2me/base/mixin/access/IState": {
+      "propertiesCodec": "f_61113_:Lcom/mojang/serialization/MapCodec;"
+    },
+    "com/ishland/c2me/base/mixin/access/IServerEntityManager": {
+      "getAllChunksToSave": "m_157587_()Lit/unimi/dsi/fastutil/longs/LongSet;"
+    },
+    "com/ishland/c2me/base/mixin/access/IChunkTicketManager": {
+      "playerTicketManager": "f_140764_:Lnet/minecraft/server/level/DistanceManager$PlayerTicketTracker;",
+      "tickets": "f_140761_:Lit/unimi/dsi/fastutil/longs/Long2ObjectOpenHashMap;",
+      "playersPerChunk": "f_140760_:Lit/unimi/dsi/fastutil/longs/Long2ObjectMap;",
+      "updatePlayerTickets": "m_140777_(I)V"
+    },
+    "com/ishland/c2me/base/mixin/access/IUpgradeData": {
+      "index": "f_63324_:[[I",
+      "sides": "f_63323_:Ljava/util/EnumSet;"
+    },
+    "com/ishland/c2me/base/mixin/access/IServerChunkManager": {
+      "mainThreadProcessor": "f_8332_:Lnet/minecraft/server/level/ServerChunkCache$MainThreadExecutor;",
+      "runDistanceManagerUpdates": "m_8489_()Z",
+      "distanceManager": "f_8327_:Lnet/minecraft/server/level/DistanceManager;"
+    },
+    "com/ishland/c2me/base/mixin/access/IWeightedListEntry": {
+      "getRandWeight": "m_147946_()D",
+      "setRandom": "m_147941_(F)V"
+    },
+    "com/ishland/c2me/base/mixin/access/IXoroshiro128PlusPlusRandomDeriver": {
+      "seedHi": "f_190124_:J",
+      "seedLo": "f_190123_:J"
+    },
+    "com/ishland/c2me/base/mixin/access/IBlender": {
+      "HEIGHT_BLENDING_RANGE_CHUNKS": "f_190140_:I"
+    },
+    "com/ishland/c2me/base/mixin/access/IAtomicSimpleRandomDeriver": {
+      "seed": "f_188586_:J"
+    },
+    "com/ishland/c2me/base/mixin/scheduler/MixinThreadedAnvilChunkStorage": {
+      "updateChunkScheduling": "Lnet/minecraft/server/level/ChunkMap;m_140176_(JILnet/minecraft/server/level/ChunkHolder;I)Lnet/minecraft/server/level/ChunkHolder;"
+    },
+    "com/ishland/c2me/base/mixin/access/IBelowZeroRetrogen": {
+      "missingBedrock": "f_188461_:Ljava/util/BitSet;",
+      "targetStatus": "m_188466_()Lnet/minecraft/world/level/chunk/ChunkStatus;"
+    },
+    "com/ishland/c2me/base/mixin/access/IXoroshiro128PlusPlusRandomImpl": {
+      "seedHi": "f_190090_:J",
+      "seedLo": "f_190089_:J"
+    },
+    "com/ishland/c2me/base/mixin/access/IStructurePiece": {
+      "boundingBox": "f_73383_:Lnet/minecraft/world/level/levelgen/structure/BoundingBox;",
+      "orientation": "f_73377_:Lnet/minecraft/core/Direction;",
+      "mirror": "f_73378_:Lnet/minecraft/world/level/block/Mirror;",
+      "genDepth": "f_73384_:I",
+      "rotation": "f_73379_:Lnet/minecraft/world/level/block/Rotation;",
+      "type": "f_73380_:Lnet/minecraft/world/level/levelgen/structure/pieces/StructurePieceType;"
+    },
+    "com/ishland/c2me/base/mixin/access/IStructureStart": {
+      "references": "f_73568_:I",
+      "pieceContainer": "f_192654_:Lnet/minecraft/world/level/levelgen/structure/pieces/PiecesContainer;",
+      "structure": "f_226844_:Lnet/minecraft/world/level/levelgen/structure/Structure;"
+    },
+    "com/ishland/c2me/base/mixin/access/IStorageIoWorker": {
+      "getOrCreateOldDataForRegion": "m_223463_(II)Ljava/util/concurrent/CompletableFuture;"
+    },
+    "com/ishland/c2me/base/mixin/access/IChunkSection": {
+      "biomes": "f_187995_:Lnet/minecraft/world/level/chunk/PalettedContainerRO;",
+      "states": "f_62972_:Lnet/minecraft/world/level/chunk/PalettedContainer;"
+    },
+    "com/ishland/c2me/base/mixin/access/IBlendingData": {
+      "heights": "f_190269_:[D",
+      "areaWithOldGeneration": "f_224738_:Lnet/minecraft/world/level/LevelHeightAccessor;"
+    },
+    "com/ishland/c2me/base/mixin/access/IVersionedChunkStorage": {
+      "worker": "f_63495_:Lnet/minecraft/world/level/chunk/storage/IOWorker;"
+    },
+    "com/ishland/c2me/base/mixin/access/IRegionBasedStorage": {
+      "getRegionFile": "m_63711_(Lnet/minecraft/world/level/ChunkPos;)Lnet/minecraft/world/level/chunk/storage/RegionFile;"
+    },
+    "com/ishland/c2me/base/mixin/access/IChunkTicketManagerNearbyChunkTicketUpdater": {
+      "queueLevels": "f_140906_:Lit/unimi/dsi/fastutil/longs/Long2IntMap;"
+    },
+    "com/ishland/c2me/base/mixin/access/IXoroshiro128PlusPlusRandom": {
+      "randomNumberGenerator": "f_190099_:Lnet/minecraft/world/level/levelgen/Xoroshiro128PlusPlus;"
+    }
+  },
+  "data": {
+    "searge": {
+      "com/ishland/c2me/base/mixin/access/IRegionFile": {
+        "write": "m_63654_(Lnet/minecraft/world/level/ChunkPos;Ljava/nio/ByteBuffer;)V"
+      },
+      "com/ishland/c2me/base/mixin/access/IChunkTicket": {
+        "timedOut": "m_9434_(J)Z"
+      },
+      "com/ishland/c2me/base/mixin/util/log4j2shutdownhookisnomore/MixinMinecraftDedicatedServer": {
+        "onServerExit": "Lnet/minecraft/server/dedicated/DedicatedServer;m_6988_()V"
+      },
+      "com/ishland/c2me/base/mixin/access/IChunkHolder": {
+        "updateFutures": "m_143003_(Lnet/minecraft/server/level/ChunkMap;Ljava/util/concurrent/Executor;)V"
+      },
+      "com/ishland/c2me/base/mixin/access/IThreadedAnvilChunkStorage": {
+        "releaseLightTicket": "m_140375_(Lnet/minecraft/world/level/ChunkPos;)V",
+        "saveChunkIfNeeded": "m_198874_(Lnet/minecraft/server/level/ChunkHolder;)Z",
+        "level": "f_140133_:Lnet/minecraft/server/level/ServerLevel;",
+        "updatingChunkMap": "f_140129_:Lit/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap;",
+        "visibleChunkMap": "f_140130_:Lit/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap;",
+        "mainThreadExecutor": "f_140135_:Lnet/minecraft/util/thread/BlockableEventLoop;",
+        "promoteChunkMap": "m_140324_()Z"
+      },
+      "com/ishland/c2me/base/mixin/priority/MixinServerChunkManager": {
+        "Lnet/minecraft/server/level/ServerChunkCache$MainThreadExecutor;managedBlock(Ljava/util/function/BooleanSupplier;)V": "Lnet/minecraft/server/level/ServerChunkCache$MainThreadExecutor;m_18701_(Ljava/util/function/BooleanSupplier;)V",
+        "getChunk(IILnet/minecraft/world/level/chunk/ChunkStatus;Z)Lnet/minecraft/world/level/chunk/ChunkAccess;": "Lnet/minecraft/server/level/ServerChunkCache;m_7587_(IILnet/minecraft/world/level/chunk/ChunkStatus;Z)Lnet/minecraft/world/level/chunk/ChunkAccess;"
+      },
+      "com/ishland/c2me/base/mixin/access/INbtCompound": {
+        "entries": "m_128450_()Ljava/util/Map;"
+      },
+      "com/ishland/c2me/base/mixin/access/IBlockEntity": {
+        "saveAdditional": "m_183515_(Lnet/minecraft/nbt/CompoundTag;)V"
+      },
+      "com/ishland/c2me/base/mixin/profiling/MixinChunkHolder": {
+        "getOrScheduleFuture": "Lnet/minecraft/server/level/ChunkHolder;m_140049_(Lnet/minecraft/world/level/chunk/ChunkStatus;Lnet/minecraft/server/level/ChunkMap;)Ljava/util/concurrent/CompletableFuture;"
+      },
+      "com/ishland/c2me/base/mixin/access/IChunkTickScheduler": {
+        "pendingTicks": "f_193164_:Ljava/util/List;",
+        "tickQueue": "f_193163_:Ljava/util/Queue;"
+      },
+      "com/ishland/c2me/base/mixin/access/ISimpleTickScheduler": {
+        "ticks": "f_193291_:Ljava/util/List;"
+      },
+      "com/ishland/c2me/base/mixin/access/IWeightedList": {
+        "entries": "f_147917_:Ljava/util/List;"
+      },
+      "com/ishland/c2me/base/mixin/access/ISerializingRegionBasedStorage": {
+        "worker": "f_63773_:Lnet/minecraft/world/level/chunk/storage/IOWorker;"
+      },
+      "com/ishland/c2me/base/mixin/access/IPendingStore": {
+        "result": "f_63566_:Ljava/util/concurrent/CompletableFuture;"
+      },
+      "com/ishland/c2me/base/mixin/access/ISimpleRandom": {
+        "seed": "f_189350_:J",
+        "setSeed": "m_188584_(J)V"
+      },
+      "com/ishland/c2me/base/mixin/access/IState": {
+        "propertiesCodec": "f_61113_:Lcom/mojang/serialization/MapCodec;"
+      },
+      "com/ishland/c2me/base/mixin/access/IServerEntityManager": {
+        "getAllChunksToSave": "m_157587_()Lit/unimi/dsi/fastutil/longs/LongSet;"
+      },
+      "com/ishland/c2me/base/mixin/access/IChunkTicketManager": {
+        "playerTicketManager": "f_140764_:Lnet/minecraft/server/level/DistanceManager$PlayerTicketTracker;",
+        "tickets": "f_140761_:Lit/unimi/dsi/fastutil/longs/Long2ObjectOpenHashMap;",
+        "playersPerChunk": "f_140760_:Lit/unimi/dsi/fastutil/longs/Long2ObjectMap;",
+        "updatePlayerTickets": "m_140777_(I)V"
+      },
+      "com/ishland/c2me/base/mixin/access/IUpgradeData": {
+        "index": "f_63324_:[[I",
+        "sides": "f_63323_:Ljava/util/EnumSet;"
+      },
+      "com/ishland/c2me/base/mixin/access/IServerChunkManager": {
+        "mainThreadProcessor": "f_8332_:Lnet/minecraft/server/level/ServerChunkCache$MainThreadExecutor;",
+        "runDistanceManagerUpdates": "m_8489_()Z",
+        "distanceManager": "f_8327_:Lnet/minecraft/server/level/DistanceManager;"
+      },
+      "com/ishland/c2me/base/mixin/access/IWeightedListEntry": {
+        "getRandWeight": "m_147946_()D",
+        "setRandom": "m_147941_(F)V"
+      },
+      "com/ishland/c2me/base/mixin/access/IXoroshiro128PlusPlusRandomDeriver": {
+        "seedHi": "f_190124_:J",
+        "seedLo": "f_190123_:J"
+      },
+      "com/ishland/c2me/base/mixin/access/IBlender": {
+        "HEIGHT_BLENDING_RANGE_CHUNKS": "f_190140_:I"
+      },
+      "com/ishland/c2me/base/mixin/access/IAtomicSimpleRandomDeriver": {
+        "seed": "f_188586_:J"
+      },
+      "com/ishland/c2me/base/mixin/scheduler/MixinThreadedAnvilChunkStorage": {
+        "updateChunkScheduling": "Lnet/minecraft/server/level/ChunkMap;m_140176_(JILnet/minecraft/server/level/ChunkHolder;I)Lnet/minecraft/server/level/ChunkHolder;"
+      },
+      "com/ishland/c2me/base/mixin/access/IBelowZeroRetrogen": {
+        "missingBedrock": "f_188461_:Ljava/util/BitSet;",
+        "targetStatus": "m_188466_()Lnet/minecraft/world/level/chunk/ChunkStatus;"
+      },
+      "com/ishland/c2me/base/mixin/access/IXoroshiro128PlusPlusRandomImpl": {
+        "seedHi": "f_190090_:J",
+        "seedLo": "f_190089_:J"
+      },
+      "com/ishland/c2me/base/mixin/access/IStructurePiece": {
+        "boundingBox": "f_73383_:Lnet/minecraft/world/level/levelgen/structure/BoundingBox;",
+        "orientation": "f_73377_:Lnet/minecraft/core/Direction;",
+        "mirror": "f_73378_:Lnet/minecraft/world/level/block/Mirror;",
+        "genDepth": "f_73384_:I",
+        "rotation": "f_73379_:Lnet/minecraft/world/level/block/Rotation;",
+        "type": "f_73380_:Lnet/minecraft/world/level/levelgen/structure/pieces/StructurePieceType;"
+      },
+      "com/ishland/c2me/base/mixin/access/IStructureStart": {
+        "references": "f_73568_:I",
+        "pieceContainer": "f_192654_:Lnet/minecraft/world/level/levelgen/structure/pieces/PiecesContainer;",
+        "structure": "f_226844_:Lnet/minecraft/world/level/levelgen/structure/Structure;"
+      },
+      "com/ishland/c2me/base/mixin/access/IStorageIoWorker": {
+        "getOrCreateOldDataForRegion": "m_223463_(II)Ljava/util/concurrent/CompletableFuture;"
+      },
+      "com/ishland/c2me/base/mixin/access/IChunkSection": {
+        "biomes": "f_187995_:Lnet/minecraft/world/level/chunk/PalettedContainerRO;",
+        "states": "f_62972_:Lnet/minecraft/world/level/chunk/PalettedContainer;"
+      },
+      "com/ishland/c2me/base/mixin/access/IBlendingData": {
+        "heights": "f_190269_:[D",
+        "areaWithOldGeneration": "f_224738_:Lnet/minecraft/world/level/LevelHeightAccessor;"
+      },
+      "com/ishland/c2me/base/mixin/access/IVersionedChunkStorage": {
+        "worker": "f_63495_:Lnet/minecraft/world/level/chunk/storage/IOWorker;"
+      },
+      "com/ishland/c2me/base/mixin/access/IRegionBasedStorage": {
+        "getRegionFile": "m_63711_(Lnet/minecraft/world/level/ChunkPos;)Lnet/minecraft/world/level/chunk/storage/RegionFile;"
+      },
+      "com/ishland/c2me/base/mixin/access/IChunkTicketManagerNearbyChunkTicketUpdater": {
+        "queueLevels": "f_140906_:Lit/unimi/dsi/fastutil/longs/Long2IntMap;"
+      },
+      "com/ishland/c2me/base/mixin/access/IXoroshiro128PlusPlusRandom": {
+        "randomNumberGenerator": "f_190099_:Lnet/minecraft/world/level/levelgen/Xoroshiro128PlusPlus;"
+      }
+    }
+  }
+}

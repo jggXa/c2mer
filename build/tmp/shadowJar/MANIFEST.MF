@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Specification-Title: c2me_base
+Specification-Vendor: RelativityMC, ishland; Forge port by jggXa
+Specification-Version: 1
+Implementation-Title: c2me_base
+Implementation-Version: 0.2.0+alpha.11+forge.1
+Implementation-Vendor: RelativityMC, ishland; Forge port by jggXa
+MixinConfigs: c2me-base.mixins.json
+

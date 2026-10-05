@@ -1,0 +1,11 @@
+com/ishland/c2me/base/mixin/priority/MixinServerChunkManager mainThread f_8330_
+com/ishland/c2me/base/mixin/priority/MixinServerChunkManager chunkMap f_8325_
+com/ishland/c2me/base/mixin/profiling/MixinChunkHolder levelHeightAccessor f_142983_
+com/ishland/c2me/base/mixin/profiling/MixinJfrProfiler CUSTOM_EVENTS f_185289_
+com/ishland/c2me/base/mixin/theinterface/MixinStorageIoWorker pendingWrites f_63519_
+com/ishland/c2me/base/mixin/theinterface/MixinStorageIoWorker storage f_63518_
+com/ishland/c2me/base/mixin/priority/MixinServerChunkManager chunkAbsent (Lnet/minecraft/server/level/ChunkHolder;I)Z m_8416_
+com/ishland/c2me/base/mixin/priority/MixinServerChunkManager getVisibleChunkIfPresent (J)Lnet/minecraft/server/level/ChunkHolder; m_8364_
+com/ishland/c2me/base/mixin/profiling/MixinChunkHolder getPos ()Lnet/minecraft/world/level/ChunkPos; m_140092_
+com/ishland/c2me/base/mixin/theinterface/MixinStorageIoWorker submitTask (Ljava/util/function/Supplier;)Ljava/util/concurrent/CompletableFuture; m_63545_
+com/ishland/c2me/base/mixin/theinterface/MixinStorageIoWorker runStore (Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/level/chunk/storage/IOWorker$PendingStore;)V m_63535_
