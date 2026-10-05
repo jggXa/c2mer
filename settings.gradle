@@ -1,0 +1,26 @@
+// ===========================================================================
+//  C2ME Base —— Gradle 设置（Forge 1.20.1）
+//
+//  源码为上游 C2ME 的 ver/1.20.1 分支：该时代没有 flowsched 组合构建
+//  （那是 1.21 分支才引入的），因此这里只需声明 ForgeGradle / MixinGradle 插件仓库。
+// ===========================================================================
+pluginManagement {
+    repositories {
+        // 国内镜像，加速插件下载
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+
+        gradlePluginPortal()
+        maven { name = 'MinecraftForge'; url = 'https://maven.minecraftforge.net/' }
+        maven { name = 'SpongePowered'; url = 'https://repo.spongepowered.org/repository/maven-public/' }
+    }
+}
+
+plugins {
+    // 让 Gradle 自动下载 JDK 17 工具链：构建机没装 JDK 17 时必需（联网即可）。
+    // 若构建机已装 JDK 17，注释掉这一行可获得更快的解析。
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
+}
+
+rootProject.name = 'c2me-base-forge'

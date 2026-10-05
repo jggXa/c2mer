@@ -1,0 +1,203 @@
+// ===========================================================================
+//  C2ME Base —— Forge 1.20.1 构建脚本
+//
+//  源码：上游 C2ME 的 ver/1.20.1 分支（时代与目标一致，无需跨版本降级）
+//  由 Fabric/Loom 版移植而来（原文件见 build.gradle.fabric-original）：
+//    Fabric 侧                          ->  Forge 侧
+//    ----------------------------------    ------------------------------------
+//    fabric-loom (remapJar)             ->  ForgeGradle 6.x + reobfJar/reobfShadowJar
+//    accessWidener                      ->  AccessTransformer（META-INF/accesstransformer.cfg）
+//    fabric.mod.json                    ->  META-INF/mods.toml + pack.mcmeta
+//    Loom 的 mixin 处理                 ->  MixinGradle（生成 refmap / 注册 mixin 配置）
+//    shadow + remapJar(嵌套依赖)        ->  shadowJar + reobfShadowJar
+//  目标：JDK 17 / Gradle 8 / MC 1.20.1 / Forge 47.2.0 / official(Mojang) 映射
+// ===========================================================================
+plugins {
+    id 'java'
+    id 'idea'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'org.spongepowered.mixin' version '0.7.+'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+version = mod_version
+group = mod_group_id
+base { archivesName = mod_id }
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(Integer.parseInt(java_version))
+    }
+}
+
+minecraft {
+    // official = Mojang 官方映射。注意 Fabric 版用的是 Yarn 映射，两者名字并不相同
+    // （例如 Yarn 的 ServerChunkManager 在官方映射里叫 ServerChunkCache），
+    // 因此源码与 AT 都需要按官方映射改写，不能只换个映射通道就完事。
+    mappings channel: mapping_channel, version: mapping_version
+
+    // 替代 Fabric 的 accessWidener：开发环境也需要应用
+    // （生产环境由 Forge 自动读取 jar 内的 META-INF/accesstransformer.cfg）
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    copyIdeResources = true
+
+    runs {
+        configureEach {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            // Mixin 开发环境需要把 refmap 由 SRG 名重映射回官方名
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            mods {
+                "${mod_id}" {
+                    source sourceSets.main
+                }
+            }
+        }
+        client {
+            property 'forge.enabledGameTestNamespaces', mod_id
+        }
+        server {
+            property 'forge.enabledGameTestNamespaces', mod_id
+            args '--nogui'
+        }
+        data {
+            workingDirectory project.file('run-data')
+            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+        }
+    }
+}
+
+// 生成 refmap，并把 mixin 配置注册进构建（对应 Loom 侧自动完成的 mixin 环节）
+mixin {
+    add sourceSets.main, "${mod_id}.refmap.json"
+    config "c2me-base.mixins.json"
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+repositories {
+    // 国内镜像，加速 Maven Central 依赖下载
+    maven { url 'https://maven.aliyun.com/repository/public' }
+    maven { url 'https://maven.aliyun.com/repository/central' }
+    maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+
+    mavenCentral()
+    maven { name = 'MinecraftForge'; url = 'https://maven.minecraftforge.net/' }
+    maven { name = 'SpongePowered'; url = 'https://repo.spongepowered.org/repository/maven-public/' }
+}
+
+configurations {
+    // 与 Fabric 版一致的“要打进 jar”的依赖分组（Fabric 侧是 include/shadow，Forge 侧用 shadow）
+    shadowInclude
+    implementation.extendsFrom shadowInclude
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+
+    // Mixin 注解处理器：生成 refmap（Forge 生产环境需要）
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+    // ------------------------------------------------------------------
+    //  随模组打包的第三方依赖（按本模块源码的实际 import 逐个核对）
+    //  注：本模块不依赖 flowsched / rxjava / oshi / JNA（那些是 1.21 分支才引入的）
+    // ------------------------------------------------------------------
+    shadowInclude "com.ibm.async:asyncutil:${async_util_version}"
+    compileOnly "com.electronwill.night-config:core:${night_config_version}"
+    compileOnly "com.electronwill.night-config:toml:${night_config_version}"
+    shadowInclude "net.objecthunter:exp4j:${exp4j_version}"
+
+    // MixinExtras：Forge 1.20.1 不自带，必须随模组打包
+    // （FabricLoader 0.15+ / NeoForge 20.2.84+ 才自带；Forge 需自行 bundle —— MixinExtras README）
+    implementation "io.github.llamalad7:mixinextras-forge:${mixinextras_version}"
+    shadowInclude "io.github.llamalad7:mixinextras-forge:${mixinextras_version}"
+    implementation "io.github.llamalad7:mixinextras-common:${mixinextras_version}"
+    shadowInclude "io.github.llamalad7:mixinextras-common:${mixinextras_version}"
+    annotationProcessor "io.github.llamalad7:mixinextras-common:${mixinextras_version}"
+
+    // ------------------------------------------------------------------
+    //  由 Minecraft / Forge 提供，只做编译期依赖，不打进模组
+    // ------------------------------------------------------------------
+    compileOnly "org.jetbrains:annotations:${annotations_version}"
+    compileOnly "org.ow2.asm:asm-tree:${asm_version}"
+}
+
+// 把 gradle.properties 里的占位符替换进 mods.toml / pack.mcmeta
+tasks.named('processResources', ProcessResources).configure {
+    var replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            forge_version          : forge_version,
+            forge_version_range    : forge_version_range,
+            loader_version_range   : loader_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            mod_description        : mod_description
+    ]
+    inputs.properties replaceProperties
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+        expand replaceProperties + [project: project]
+    }
+}
+
+tasks.named('jar', Jar).configure {
+    manifest {
+        attributes([
+                'Specification-Title'   : mod_id,
+                'Specification-Vendor'  : 'RelativityMC, ishland; Forge port by jggXa',
+                'Specification-Version' : '1',
+                'Implementation-Title'  : mod_id,
+                'Implementation-Version': project.jar.archiveVersion,
+                'Implementation-Vendor' : 'RelativityMC, ishland; Forge port by jggXa',
+                // Forge 的 Mixin 服务就是靠这个 manifest 属性发现 mixin 配置的
+                'MixinConfigs'          : 'c2me-base.mixins.json'
+        ])
+    }
+    // 许可与第三方声明随产物分发（MIT / Apache-2.0 / LGPL-3.0 合规）
+    from('LICENSE')
+    from('THIRD-PARTY.md')
+    from('licenses') { into 'licenses' }
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
+// 阴影 jar：把 asyncutil / night-config / exp4j / MixinExtras 打进产物
+// （对应 Fabric 版的 shadowJar + remapJar{ addNestedDependencies = true }）
+shadowJar {
+    archiveClassifier = 'all-dev'
+    configurations = [project.configurations.shadowInclude]
+    // MixinExtras 官方对 Shadow 方案的要求：重定位 + 合并 META-INF/services
+    // 去掉从 mixinextras-forge 抄进来的 JarJar 载荷：它是未重定位的第二份 MixinExtras（108 个类），
+    // 且其嵌套 jar 没有 mods.toml，Forge 的 JarJar 处理它会在启动阶段报错
+    exclude 'META-INF/jars/**'
+    exclude 'META-INF/jarjar/**'
+    relocate 'com.llamalad7.mixinextras', 'com.ishland.c2me.shaded.mixinextras'
+    mergeServiceFiles()
+    // 许可与第三方声明随阴影产物分发
+    from('LICENSE')
+    from('THIRD-PARTY.md')
+    from('licenses') { into 'licenses' }
+    manifest {
+        attributes([
+                'Specification-Title'   : mod_id,
+                'Specification-Vendor'  : 'RelativityMC, ishland; Forge port by jggXa',
+                'Specification-Version' : '1',
+                'Implementation-Title'  : mod_id,
+                'Implementation-Version': project.version,
+                'Implementation-Vendor' : 'RelativityMC, ishland; Forge port by jggXa',
+                'MixinConfigs'          : 'c2me-base.mixins.json'
+        ])
+    }
+}
+
+// 阴影产物同样需要 reobf（生产环境运行的是 SRG 名字）
+reobf {
+    shadowJar {}
+}
+
+tasks.named('build').configure { dependsOn 'reobfShadowJar' }
